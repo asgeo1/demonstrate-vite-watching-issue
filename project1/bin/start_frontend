@@ -1,0 +1,13 @@
+#!/usr/bin/env sh
+# bin/start_frontend
+
+# yark check seems slow...
+#
+# echo "Checking bundle dependencies..."
+# yarn check || yarn install
+
+echo "Installing bundle dependencies..."
+cd /usr/src/app && npm install
+
+echo "Booting Vite..."
+cd /usr/src/app/project1 && npm run dev

@@ -1,0 +1,50 @@
+version: '3.5'
+name: example
+services:
+  project1:
+    build:
+      context: .
+      dockerfile: ./project1/Dockerfile.development
+    container_name: "example-project1"
+    command: ["bin/start_frontend"]
+    ports:
+      - "3000:3000"
+    stdin_open: true
+    volumes:
+      - ./shared:/usr/src/app/shared
+      - ./project1:/usr/src/app/project1
+      - ./project2:/usr/src/app/project2
+      - ./package.json:/usr/src/app/package.json
+      - ./package-lock.json:/usr/src/app/package-lock.json
+      - root_node_modules:/usr/src/app/node_modules
+      - project1_vite:/usr/src/app/project1/.vite
+    networks:
+      - example
+
+  project2:
+    build:
+      context: .
+      dockerfile: ./project2/Dockerfile.development
+    container_name: "example-project2"
+    command: ["bin/start_frontend"]
+    ports:
+      - "3001:3001"
+    stdin_open: true
+    volumes:
+      - ./shared:/usr/src/app/shared
+      - ./project1:/usr/src/app/project1
+      - ./project2:/usr/src/app/project2
+      - ./package.json:/usr/src/app/package.json
+      - ./package-lock.json:/usr/src/app/package-lock.json
+      - root_node_modules:/usr/src/app/node_modules
+      - project2_vite:/usr/src/app/project2/.vite
+    networks:
+      - example
+
+volumes:
+  root_node_modules:
+  project1_vite:
+  project2_vite:
+
+networks:
+  example:
